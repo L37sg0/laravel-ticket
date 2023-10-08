@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Helpdesk\Department;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\User as Model;
+use App\Models\Helpdesk\UserDepartment as Model;
 
 return new class extends Migration
 {
@@ -14,11 +16,16 @@ return new class extends Migration
     {
         Schema::create(Model::TABLE_NAME, function (Blueprint $table) {
             $table->id();
-            $table->string(Model::FIELD_NAME);
-            $table->string(Model::FIELD_EMAIL)->unique();
-            $table->timestamp(Model::FIELD_EMAIL_VERIFIED_AT)->nullable();
-            $table->string(Model::FIELD_PASSWORD);
-            $table->rememberToken();
+            $table->foreignId(Model::FIELD_USER_ID)
+                ->index()
+                ->constrained(User::TABLE_NAME)
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            $table->foreignId(Model::FIELD_DEPARTMENT_ID)
+                ->index()
+                ->constrained(Department::TABLE_NAME)
+                ->onDelete('no action')
+                ->onUpdate('no action');
             $table->timestamps();
         });
     }
