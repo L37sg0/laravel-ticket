@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Department extends Model implements StaticData
 {
@@ -25,6 +26,9 @@ class Department extends Model implements StaticData
         return $this->belongsToMany(User::class, UserDepartment::TABLE_NAME);
     }
 
+    /**
+     * @return HasMany
+     */
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
