@@ -6,17 +6,29 @@ use App\Models\Helpdesk\DepartmentStaticData as StaticData;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Department extends Model implements StaticData
 {
     use HasFactory;
+    use HasParentChildRelations;
 
     protected $table    = self::TABLE_NAME;
     protected $fillable = self::FILLABLE;
     protected $casts    = self::CASTS;
 
-    public function users()
+    /**
+     * @return BelongsToMany
+     */
+    public function agents()
     {
         return $this->belongsToMany(User::class, UserDepartment::TABLE_NAME);
     }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+
 }

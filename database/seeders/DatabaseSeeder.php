@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
         // Attach 1 user to each Department based on same id
         foreach (Department::all() as $department) {
             $userId = $department->getAttribute(Department::FIELD_ID);
-            $department->users()->attach($userId);
+            $department->agents()->attach($userId);
         }
     }
 
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
                 Ticket::FIELD_DEPARTMENT_ID => $department->getAttribute(Department::FIELD_ID),
                 Ticket::FIELD_INITIATOR     => Initiator::Customer,
                 Ticket::FIELD_CUSTOMER_ID   => $department->getAttribute(Department::FIELD_ID) + 10,
-                Ticket::FIELD_AGENT_ID      => $department->users()->first()->getAttribute(User::FIELD_ID)
+                Ticket::FIELD_AGENT_ID      => $department->agents()->first()->getAttribute(User::FIELD_ID)
             ]);
         }
 
@@ -90,15 +90,17 @@ class DatabaseSeeder extends Seeder
 
         // Create customer answers for every parent ticket
         foreach (Ticket::all() as $parentTicket) {
-            Ticket::factory(1)->create([
-                Ticket::FIELD_PARENT_ID     => $parentTicket->getAttribute(Ticket::FIELD_ID),
-                Ticket::FIELD_DEPARTMENT_ID => $parentTicket->getAttribute(Ticket::FIELD_DEPARTMENT_ID),
-                Ticket::FIELD_INITIATOR     => Initiator::Customer,
-                Ticket::FIELD_CUSTOMER_ID   => $parentTicket->getAttribute(Ticket::FIELD_CUSTOMER_ID),
-                Ticket::FIELD_AGENT_ID      => $parentTicket->getAttribute(Ticket::FIELD_AGENT_ID),
-                Ticket::FIELD_EXT_ID        => $parentTicket->getAttribute(Ticket::FIELD_EXT_ID),
-                Ticket::FIELD_STATUS        => TicketStatus::Pending
-            ]);
+            if ($parentTicket->isParent()) {
+                Ticket::factory(1)->create([
+                    Ticket::FIELD_PARENT_ID => $parentTicket->getAttribute(Ticket::FIELD_ID),
+                    Ticket::FIELD_DEPARTMENT_ID => $parentTicket->getAttribute(Ticket::FIELD_DEPARTMENT_ID),
+                    Ticket::FIELD_INITIATOR => Initiator::Customer,
+                    Ticket::FIELD_CUSTOMER_ID => $parentTicket->getAttribute(Ticket::FIELD_CUSTOMER_ID),
+                    Ticket::FIELD_AGENT_ID => $parentTicket->getAttribute(Ticket::FIELD_AGENT_ID),
+                    Ticket::FIELD_EXT_ID => $parentTicket->getAttribute(Ticket::FIELD_EXT_ID),
+                    Ticket::FIELD_STATUS => TicketStatus::Pending
+                ]);
+            }
         }
 
         // Create 1 meta for each Ticket
