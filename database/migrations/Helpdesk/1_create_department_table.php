@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\User as Model;
+use App\Models\Helpdesk\Department as Model;
 
 return new class extends Migration
 {
@@ -14,11 +14,15 @@ return new class extends Migration
     {
         Schema::create(Model::TABLE_NAME, function (Blueprint $table) {
             $table->id();
-            $table->string(Model::FIELD_NAME);
-            $table->string(Model::FIELD_EMAIL)->unique();
-            $table->timestamp(Model::FIELD_EMAIL_VERIFIED_AT)->nullable();
-            $table->string(Model::FIELD_PASSWORD);
-            $table->rememberToken();
+            $table->foreignId(Model::FIELD_PARENT_ID)
+                ->nullable()
+                ->index()
+                ->constrained(Model::TABLE_NAME)
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            $table->string(Model::FIELD_TITLE, 50);
+            $table->string(Model::FIELD_META_TITLE, 50);
+            $table->string(Model::FIELD_SLUG,50);
             $table->timestamps();
         });
     }
