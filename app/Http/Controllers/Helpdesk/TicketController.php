@@ -13,6 +13,10 @@ use Illuminate\Routing\Controller;
 
 class TicketController extends Controller
 {
+    /**
+     * @param Index $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Index $request)
     {
         $resultsPerPage = 10;
@@ -27,7 +31,10 @@ class TicketController extends Controller
     }
 
 
-
+    /**
+     * @param Create $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(Create $request)
     {
         $ticket = new Ticket();
@@ -38,15 +45,20 @@ class TicketController extends Controller
         return response()->json(['message' => 'Ticket created.' . $ticket->getAttribute(Ticket::FIELD_ID)], 201);
     }
 
+    /**
+     * @param Read $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function read(Read $request)
     {
         $ticket = Ticket::find($request->get('ticket_id'));
-        if (!empty($ticket)) {
             return response()->json($ticket);
-        }
-        throw new ResourceNotFoundHttpException();
     }
 
+    /**
+     * @param Update $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Update $request)
     {
         $ticket = Ticket::find($request->get('ticket_id'));
@@ -61,6 +73,10 @@ class TicketController extends Controller
         throw new ResourceNotFoundHttpException();
     }
 
+    /**
+     * @param Delete $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Delete $request)
     {
         $ticket = Ticket::find($request->get('ticket_id'));

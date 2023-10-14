@@ -7,22 +7,13 @@ use App\Http\Requests\Helpdesk\RequestValidator;
 class Read extends RequestValidator
 {
     /**
-     * @return string[]
+     * @return array[]
      */
     public function rules()
     {
         return [
-            'ticket_id' => 'required',
+            'ticket_id' => ['required', 'numeric', self::TICKET_EXISTS],
         ];
     }
 
-//    /**
-//     * @return string[]
-//     */
-//    public function messages()
-//    {
-//        return [
-//            'ticket_id.required'    => 'Parameter ticket_id is required',
-//        ];
-//    }
 }

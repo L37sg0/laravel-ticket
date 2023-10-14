@@ -22,6 +22,7 @@ interface TicketStaticData
     public const FILLABLE = [
         self::FIELD_DEPARTMENT_ID,
         self::FIELD_PARENT_ID,
+        self::FIELD_INITIATOR,
         self::FIELD_CUSTOMER_ID,
         self::FIELD_AGENT_ID,
         self::FIELD_EXT_ID,
@@ -31,7 +32,7 @@ interface TicketStaticData
     ];
 
     public const CASTS = [
-        self::FIELD_STATUS => TicketStatus::class,
+        self::FIELD_STATUS      => TicketStatus::class,
         self::FIELD_INITIATOR   => Initiator::class
     ];
 }

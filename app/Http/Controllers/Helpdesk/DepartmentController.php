@@ -35,7 +35,6 @@ class DepartmentController extends Controller
     /**
      * @param Create $request
      * @return \Illuminate\Http\JsonResponse
-     * @throws Throwable
      */
     public function create(Create $request)
     {

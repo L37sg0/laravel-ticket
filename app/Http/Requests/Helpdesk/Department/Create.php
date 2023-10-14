@@ -8,6 +8,11 @@ class Create extends RequestValidator
 {
     public function rules()
     {
-        return [];
+        return [
+            'parent_id'     => [],
+            'title'         => 'required',
+            'meta_title'    =>  '',
+            'slug'          => ''
+        ];
     }
 }

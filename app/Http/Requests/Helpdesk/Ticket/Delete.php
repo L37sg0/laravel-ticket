@@ -8,6 +8,8 @@ class Delete extends RequestValidator
 {
     public function rules()
     {
-        return [];
+        return [
+            'ticket_id' => ['required', 'numeric', self::TICKET_EXISTS],
+        ];
     }
 }
