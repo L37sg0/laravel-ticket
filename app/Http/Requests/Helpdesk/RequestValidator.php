@@ -11,9 +11,18 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class RequestValidator extends FormRequest
 {
-    public const DEPARTMENT_EXISTS  = "exists:" . Department::TABLE_NAME . "," . Department::FIELD_ID;
-    public const TICKET_EXISTS      = "exists:" . Ticket::TABLE_NAME . "," . Ticket::FIELD_ID;
-    public const USER_EXISTS        = "exists:" . User::TABLE_NAME . "," . User::FIELD_ID;
+    public const DEPARTMENT_EXISTS      = 'exists:' . Department::TABLE_NAME . ',' . Department::FIELD_ID;
+    public const TICKET_EXISTS          = 'exists:' . Ticket::TABLE_NAME     . ',' . Ticket::FIELD_ID;
+    public const TICKET_EXT_ID_UNIQUE   = 'unique:' . Ticket::TABLE_NAME     . ',' . Ticket::FIELD_EXT_ID;
+    public const USER_EXISTS            = 'exists:' . User::TABLE_NAME       . ',' . User::FIELD_ID;
+    public const CONTENT_IS_JSON        = 'in:application/json';
+// TODO Make sure API accepts only json requests for POST methods with payload instead of Url parameters.
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'content_type' => $this->headers->get('Content-type')
+        ]);
+    }
 
     /**
      * @param Validator $validator

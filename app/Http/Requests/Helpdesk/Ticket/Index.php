@@ -8,6 +8,8 @@ class Index extends RequestValidator
 {
     public function rules()
     {
-        return [];
+        return [
+            'per_page'  => ['nullable', 'numeric']
+        ];
     }
 }

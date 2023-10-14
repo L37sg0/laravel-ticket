@@ -9,7 +9,8 @@ class Delete extends RequestValidator
     public function rules()
     {
         return [
-            'ticket_id' => ['required', 'numeric', self::TICKET_EXISTS],
+            'content_type'  => ['required', self::CONTENT_IS_JSON],
+            'ticket_id'     => ['required', 'numeric', self::TICKET_EXISTS],
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Helpdesk;
 
-use App\Exceptions\Helpdesk\ResourceNotFoundHttpException;
 use App\Http\Requests\Helpdesk\Ticket\Create;
 use App\Http\Requests\Helpdesk\Ticket\Delete;
 use App\Http\Requests\Helpdesk\Ticket\Index;
@@ -52,7 +51,7 @@ class TicketController extends Controller
     public function read(Read $request)
     {
         $ticket = Ticket::find($request->get('ticket_id'));
-            return response()->json($ticket);
+        return response()->json($ticket);
     }
 
     /**
@@ -62,15 +61,13 @@ class TicketController extends Controller
     public function update(Update $request)
     {
         $ticket = Ticket::find($request->get('ticket_id'));
-        if (!empty($ticket)) {
-            foreach (Ticket::FILLABLE as $key) {
-                if (!empty($request->get($key))) {
-                    $ticket->setAttribute($key, $request->get($key))->save();
-                }
+        foreach (Ticket::FILLABLE as $key) {
+            if (!empty($request->get($key))) {
+                $ticket->setAttribute($key, $request->get($key));
             }
-            return response()->json(['message' => 'Ticket updated.'], 201);
         }
-        throw new ResourceNotFoundHttpException();
+        $ticket->save();
+        return response()->json(['message' => 'Ticket updated.'], 201);
     }
 
     /**
@@ -80,10 +77,7 @@ class TicketController extends Controller
     public function destroy(Delete $request)
     {
         $ticket = Ticket::find($request->get('ticket_id'));
-        if (!empty($ticket)) {
-            $ticket->delete();
-            return response()->json(['message' => 'Ticket deleted.'], 201);
-        }
-        throw new ResourceNotFoundHttpException();
+        $ticket->delete();
+        return response()->json(['message' => 'Ticket deleted.'], 201);
     }
 }

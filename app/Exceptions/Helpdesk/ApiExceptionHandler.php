@@ -14,6 +14,7 @@ class ApiExceptionHandler extends Handler
     public function render($request, Throwable $e)
     {
         $apiRoute = "api/helpdesk";
+        $request->header('Content-Type', 'application/json');
         if ((str_contains($e->getMessage(), $apiRoute) or str_contains($request->fullUrl(), $apiRoute))){
             if ($e instanceof HttpExceptionInterface) {
                 $message = $e->getMessage();
