@@ -43,7 +43,7 @@ class Ticket extends Model implements StaticData
     }
 
     /**
-     * @return Collection
+//     * @return Collection
      */
     public function attachments()
     {
@@ -56,6 +56,7 @@ class Ticket extends Model implements StaticData
             }
         }
         return $attachments;
+//        return $this->hasMany(TicketMeta::class)->with('attachment');
     }
 
 }

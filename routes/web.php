@@ -25,7 +25,7 @@ Route::group(['as' => 'api.', 'prefix' => 'api'], static function(){
             Route::get('/', [TicketController::class, 'index'])->name('all');
             Route::post('/create', [TicketController::class, 'create'])->name('create');
             Route::get('/read', [TicketController::class, 'read'])->name('read');
-            Route::put('/update', [TicketController::class, 'update'])->name('update');
+            Route::post('/update', [TicketController::class, 'update'])->name('update');
             Route::delete('/delete', [TicketController::class, 'destroy'])->name('delete');
         });
         Route::group(['as' => 'departments.', 'prefix' => 'departments'], static function () {

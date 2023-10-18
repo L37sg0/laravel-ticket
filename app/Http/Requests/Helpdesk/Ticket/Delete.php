@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Helpdesk\Ticket;
 
-use App\Http\Requests\Helpdesk\RequestValidator;
+use App\Http\Requests\Helpdesk\ApiRequestValidator;
+use App\Http\Requests\Helpdesk\DeleteRequest;
 
-class Delete extends RequestValidator
+class Delete extends ApiRequestValidator implements DeleteRequest
 {
     public function rules()
     {
         return [
-            'content_type'  => ['required', self::CONTENT_IS_JSON],
             'ticket_id'     => ['required', 'numeric', self::TICKET_EXISTS],
         ];
     }

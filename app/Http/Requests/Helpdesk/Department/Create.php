@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Helpdesk\Department;
 
-use App\Http\Requests\Helpdesk\RequestValidator;
+use App\Http\Requests\Helpdesk\ApiRequestValidator;
+use App\Http\Requests\Helpdesk\CreateRequest;
 
-class Create extends RequestValidator
+class Create extends ApiRequestValidator implements CreateRequest
 {
     public function rules()
     {

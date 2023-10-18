@@ -2,14 +2,15 @@
 
 namespace App\Http\Requests\Helpdesk\Department;
 
-use App\Http\Requests\Helpdesk\RequestValidator;
+use App\Http\Requests\Helpdesk\ApiRequestValidator;
+use App\Http\Requests\Helpdesk\ReadRequest;
 
-class Read extends RequestValidator
+class Read extends ApiRequestValidator implements ReadRequest
 {
     public function rules()
     {
         return [
-            "department_id" => "required"
+            "department_id" => ['required', 'numeric', self::DEPARTMENT_EXISTS]
         ];
     }
 }

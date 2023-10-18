@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Helpdesk\Ticket;
 
-use App\Http\Requests\Helpdesk\RequestValidator;
+use App\Http\Requests\Helpdesk\ApiRequestValidator;
+use App\Http\Requests\Helpdesk\ReadRequest;
 
-class Read extends RequestValidator
+class Read extends ApiRequestValidator implements ReadRequest
 {
     /**
      * @return array[]

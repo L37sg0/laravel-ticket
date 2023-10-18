@@ -2,18 +2,18 @@
 
 namespace App\Http\Requests\Helpdesk\Ticket;
 
-use App\Http\Requests\Helpdesk\RequestValidator;
+use App\Http\Requests\Helpdesk\ApiRequestValidator;
+use App\Http\Requests\Helpdesk\UpdateRequest;
 use App\Models\Helpdesk\Initiator;
 use App\Models\Helpdesk\Ticket;
 use App\Models\Helpdesk\TicketStatus;
 use Illuminate\Validation\Rules\Enum;
 
-class Update extends RequestValidator
+class Update extends ApiRequestValidator implements UpdateRequest
 {
     public function rules()
     {
         return [
-            'content_type'              => ['required', self::CONTENT_IS_JSON],
             'ticket_id'                 => ['required', 'numeric', self::TICKET_EXISTS],
             Ticket::FIELD_DEPARTMENT_ID => ['nullable', 'numeric', self::DEPARTMENT_EXISTS],
             Ticket::FIELD_PARENT_ID     => ['nullable', 'numeric', self::TICKET_EXISTS],

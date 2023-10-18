@@ -3,14 +3,15 @@
 namespace App\Http\Requests\Helpdesk\Ticket;
 
 use App\Http\Requests\Helpdesk\ApiRequestValidator;
-use App\Http\Requests\Helpdesk\IndexRequest;
+use App\Http\Requests\Helpdesk\ImportRequest;
 
-class Index extends ApiRequestValidator implements IndexRequest
+class Import extends ApiRequestValidator implements ImportRequest
 {
+
     public function rules()
     {
         return [
-            'per_page'  => ['nullable', 'numeric']
+            // TODO: Implement rules() method.
         ];
     }
 }
